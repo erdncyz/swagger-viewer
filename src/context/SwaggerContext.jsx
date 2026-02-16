@@ -39,7 +39,15 @@ export function SwaggerProvider({ children }) {
         for (const tryUrl of urls) {
             try {
                 const response = await fetch(tryUrl);
-                if (!response.ok) continue;
+                if (!response.ok) {
+                    try {
+                        const errText = await response.text();
+                        console.warn(`Failed to load from ${tryUrl}: HTTP ${response.status} ${response.statusText}`, errText);
+                    } catch {
+                        console.warn(`Failed to load from ${tryUrl}: HTTP ${response.status} ${response.statusText}`);
+                    }
+                    continue;
+                }
 
                 let data = await response.json();
 
