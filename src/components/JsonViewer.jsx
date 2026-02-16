@@ -42,6 +42,7 @@ export default function JsonViewer({ data, initialExpanded = true, maxDepth = 6 
 }
 
 function JsonNode({ value, depth, keyName, initialExpanded, maxDepth, isLast = true }) {
+    const { t } = useLanguage();
     const [expanded, setExpanded] = useState(depth < (initialExpanded ? 3 : 1));
 
     if (value === null) {
